@@ -59,7 +59,10 @@
         },
         {
             "EventName" : "A2DP.Volume",
-            "Payloads" : "integer"
+            "Payloads" : "natural",
+            "Options" : {
+                "max" : 100
+             }
         },
         {
             "EventName" : "A2DP.Status",
@@ -107,8 +110,8 @@
             </fieldset>
         </div>
         <div class="col-md-6">
-            <label>Event:</label>
-            <pre class="event"></pre>
+            <label>Data:</label>
+            <pre class="data"></pre>
             <label>Headers:</label>
             <pre class="headers"></pre>
         </div>
