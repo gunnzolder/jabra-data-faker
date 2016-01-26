@@ -56,28 +56,39 @@
 
     var submit = document.querySelector('input[name=generate]');
     submit.onclick = function(){
-        displayEvent('.event-generator__textarea','pre.data','pre.headers', chance);
+        var url = "http://jabra-place.dev/jabra-faker-test.php",
+            source = '.event-generator__textarea';
+
+        displayEvent(source,'pre.data','pre.headers', chance);
+        //sendRequest(url, source, chance);
+    }
+
+    var post = document.querySelector('input[name=post]');
+
+    post.onclick = function(){
+        var url = document.querySelector('#post_url').value || "http://jabra-place.dev/jabra-faker-test.php",
+            data = JSON.parse(document.querySelector('pre.data').innerHTML),
+            headers = JSON.parse(document.querySelector('pre.headers').innerHTML);
+
+        sendRequest(url, data, headers, chance);
     }
 
 
     function displayEvent(source, eventQuery, headerQuery, chance){
 
-        var availableHeaders = JSON.parse(document.querySelector("#headers_json").value);
-
-        var textarea = document.querySelector(source),
+        var availableHeaders = JSON.parse(document.querySelector("#headers_json").value),
+            textarea = document.querySelector(source),
             availableEvents = JSON.parse(textarea.value),
             eventTarget = document.querySelector(eventQuery),
             headerTarget = document.querySelector(headerQuery),
-            headers = JSON.stringify(chance.Header(availableHeaders), null, 4);
+            headers = chance.Header(availableHeaders),
+            requestData = makeEventsArray(availableEvents, chance);
 
-
-        var requestData = JSON.stringify(pushData(availableEvents, chance), null, 4);
-
-        eventTarget.innerHTML = requestData;
-        headerTarget.innerHTML = headers;
+        eventTarget.innerHTML = JSON.stringify(requestData, null, 4);
+        headerTarget.innerHTML = JSON.stringify(headers, null, 4);
     }
 
-    function pushData(availableEvents, chance){
+    function makeEventsArray(availableEvents, chance){
         var data = [];
         for (var i = chance.d10();i >= 0; --i) {
             data.push(chance.Event(availableEvents))
@@ -85,5 +96,32 @@
         return data
     }
 
+    function sendRequest(url, data, headers, chance){
+
+        var http = new XMLHttpRequest();
+        http.open("POST", url, true);
+        http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+
+        for (var header in headers) {
+            http.setRequestHeader(header, headers[header])
+        }
+
+        http.send("data="+JSON.stringify(data));
+
+        var postResult = document.querySelector('.post_result');
+
+        http.onreadystatechange = function() {
+            if(http.readyState == 4 && http.status == 200) {
+                var response = JSON.parse(http.responseText);
+                //console.log(JSON.parse(response));
+                console.log(response);
+                postResult.innerHTML = JSON.stringify(response, null, 4);
+                //postResult.innerHTML = http.responseText;
+                postResult.classList.add('alert-success');
+
+            }
+        }
+    }
 
 })();
