@@ -30,7 +30,6 @@
         var event = new Event();
 
         var i = Math.floor(Math.random()*events.length);
-        //var i = 1;
         event.EventName = events[i].EventName;
 
         if(typeof events[i].Payloads != 'object') {

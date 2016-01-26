@@ -6203,6 +6203,12 @@ a.bg-danger:focus, a.bg-danger:hover {
   margin-top: 30px;
 }
 
+.event-generator__submit {
+  position: absolute;
+  right: 15px;
+  top: 0;
+}
+
 .event-generator__textarea {
   width: 100%;
   height: 1000px;
