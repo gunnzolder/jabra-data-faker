@@ -95,10 +95,4 @@
     }
 
 
-    var textarea = document.querySelector('.event-generator__textarea'),
-        events = JSON.parse(textarea.value);
-
-
-
-
 })();
