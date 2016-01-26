@@ -3,7 +3,10 @@
 var gulp = require('gulp'),
     map = require('map-stream'),
     sass = require('gulp-sass'),
-    concat = require('gulp-concat');
+    concat = require('gulp-concat'),
+    uglify = require('gulp-uglify'),
+    jsonminify = require('gulp-jsonminify'),
+    inject = require('gulp-inject');
 
 
 gulp.task('libs', function () {
@@ -17,15 +20,42 @@ gulp.task('libs', function () {
 
 gulp.task('scripts', function () {
     gulp.src([
-            'src/**/*.js'
+            'src/chance.mixins.js',
+            'src/app.js',
+            'src/single.js'
         ], {base:'./app'})
         .pipe(map(stripPaths))
+        //.pipe(concat('app.js'))
         .pipe(gulp.dest('./app'));
 });
 
 gulp.task('html', function () {
+
+    var events = gulp.src('./src/data/events.json').pipe(jsonminify());
+    var headers = gulp.src('./src/data/headers.json').pipe(jsonminify());
+
+    function fileContents (filePath, file) {
+        return file.contents.toString('utf8');
+    }
+
+    function injectOptions(id) {
+        return {
+            starttag: 'id="'+id+'">',
+            endtag: "</script>",
+            transform: fileContents
+        }
+    }
+
     gulp.src([
-            'src/**/*.html'
+            'src/**/index.html'
+        ], {base:'./src'})
+        //.pipe(inject(headers, { transform: fileContents }))
+        .pipe(inject(events,injectOptions('events_json')))
+        .pipe(inject(headers,injectOptions('headers_json')))
+        .pipe(gulp.dest('./app'));
+
+    gulp.src([
+            'src/**/single-request.html'
         ], {base:'./src'})
         .pipe(gulp.dest('./app'));
 });

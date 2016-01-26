@@ -1,0 +1,63 @@
+[
+  {
+    "EventName" : "Call.Mute",
+    "Payloads" : [true]
+  },
+  {
+    "EventName" : "Call.Volume",
+    "Payloads" : "natural",
+    "Options" : {
+      "max" : 100
+    }
+  },
+  {
+    "EventName" : "Call.Status",
+    "Payloads" : ["ON", "OFF"]
+  },
+  {
+    "EventName" : "Call.Incoming",
+    "Payloads" : [true]
+  },
+  {
+    "EventName" : "Call.Accepted",
+    "Payloads" : "bool"
+  },
+  {
+    "EventName" : "Call.Rejected",
+    "Payloads" : "bool"
+  },
+  {
+    "EventName" : "Call.notAccepted",
+    "Payloads" : [true]
+  },
+  {
+    "EventName" : "Call.Outgoing",
+    "Payloads" : "bool"
+  },
+  {
+    "EventName" : "A2DP.Volume",
+    "Payloads" : "natural",
+    "Options" : {
+      "max" : 100
+    }
+  },
+  {
+    "EventName" : "A2DP.Status",
+    "Payloads" : ["ON", "OFF"]
+  },
+  {
+    "EventName" : "Device.Connected",
+    "Payloads" : "bool"
+  },
+  {
+    "EventName" : "Charging.Level",
+    "Payloads" : "natural",
+    "Options" : {
+      "max" : 10
+    }
+  },
+  {
+    "EventName" : "Charging.Status",
+    "Payloads" : ["ON", "OFF"]
+  }
+]
