@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Jabra Event Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<section class="event-generator container">
+    <div class="row">
+        <div class="col-xs-12">
+            <h1 class="">Jabra Event Generator</h1>
+            <input type="submit" class="btn btn-success" value="Generate" style="position: absolute; right:0; top: 0;" name="generate">
+            <hr>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <fieldset class="form-group">
+                <label for="events_json">Events:</label>
+            <textarea  class="event-generator__textarea form-control" name="events_json" id="events_json">
+    [
+        {
+            "EventName" : "Call.Mute",
+            "Payloads" : [true]
+        },
+        {
+            "EventName" : "Call.Volume",
+            "Payloads" : "natural",
+            "Options" : {
+                "max" : 100
+             }
+        },
+        {
+            "EventName" : "Call.Status",
+            "Payloads" : ["ON", "OFF"]
+        },
+        {
+            "EventName" : "Call.Incoming",
+            "Payloads" : [true]
+        },
+        {
+            "EventName" : "Call.Accepted",
+            "Payloads" : "bool"
+        },
+        {
+            "EventName" : "Call.Rejected",
+            "Payloads" : "bool"
+        },
+        {
+            "EventName" : "Call.notAccepted",
+            "Payloads" : [true]
+        },
+        {
+            "EventName" : "Call.Outgoing",
+            "Payloads" : "bool"
+        },
+        {
+            "EventName" : "A2DP.Volume",
+            "Payloads" : "integer"
+        },
+        {
+            "EventName" : "A2DP.Status",
+            "Payloads" : ["ON", "OFF"]
+        },
+        {
+            "EventName" : "Device.Connected",
+            "Payloads" : "bool"
+        },
+        {
+            "EventName" : "Charging.Level",
+            "Payloads" : "natural",
+            "Options" : {
+                "max" : 10
+             }
+        },
+        {
+            "EventName" : "Charging.Status",
+            "Payloads" : ["ON", "OFF"]
+        }
+    ]
+            </textarea>
+                </fieldset>
+        </div>
+        <div class="col-md-6">
+            <label>Result:</label>
+            <pre class="result"></pre>
+        </div>
+    </div>
+
+
+
+
+
+</section>
+
+
+
+
+
+<script src="libs/chance.min.js"></script>
+<script src="libs/handlebars.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
