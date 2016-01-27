@@ -8,13 +8,13 @@
         timeLimitForm = document.querySelector('form[name="time-limit"]'),
         requestsLimitForm = document.querySelector('form[name="requests-limit"]'),
         //url = 'http://gnlogging.azurewebsites.net/api/logging';
-        //url = "http://jabra-place.dev/jabra-faker-test.php";
-        url = document.querySelector('#post-url').value;
-
+        url = "http://jabra-place.dev/jabra-faker-test.php";
+        //url = document.querySelector('#post-url').value;
 
     var interval, requestsSent, threshold;
 
     requestsLimitForm.onsubmit = function(){
+        var url = document.querySelector('#post-url').value;
         var requests = threshold = this.querySelector('input[type=number]').value;
         var messageBox = document.querySelector('.requests-limit-result');
         messageBox.innerHTML = 'Sending requests...';
@@ -33,6 +33,8 @@
     };
 
     timeLimitForm.onsubmit = function(){
+        var url = document.querySelector('#post-url').value;
+
         var timeout = this.querySelector('input[type=number]').value*1000;
         var messageBox = document.querySelector('.time-limit-result');
         messageBox.innerHTML = 'Sending requests...';
@@ -68,6 +70,8 @@
 
 
     startInterval.onclick = function(){
+        var url = document.querySelector('#post-url').value;
+
 
         var intervalValue = document.querySelector('#interval-ms').value;
 
