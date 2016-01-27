@@ -6,9 +6,9 @@
         startInterval = document.querySelector('input[name=start-interval]'),
         stopInterval = document.querySelector('input[name=stop-interval]'),
         timeLimitForm = document.querySelector('form[name="time-limit"]'),
-        requestsLimitForm = document.querySelector('form[name="requests-limit"]'),
+        requestsLimitForm = document.querySelector('form[name="requests-limit"]');
         //url = 'http://gnlogging.azurewebsites.net/api/logging';
-        url = "http://jabra-place.dev/jabra-faker-test.php";
+        //url = "http://jabra-place.dev/jabra-faker-test.php";
         //url = document.querySelector('#post-url').value;
 
     var interval, requestsSent, threshold;
@@ -40,12 +40,8 @@
         messageBox.innerHTML = 'Sending requests...';
         messageBox.classList.add('alert-warning');
 
-
         requestsSent = 0;
         threshold = false;
-        console.log(threshold);
-
-
 
         var loop = setInterval(function(){
             requestsSent++;
@@ -118,11 +114,13 @@
         for (var header in headers) {
             http.setRequestHeader(header, headers[header])
         }
+        //console.log(data);
 
         http.send("data="+JSON.stringify(data));
         http.onload = function() {
             if(http.readyState == 4 && http.status == 200) {
-                console.log(i);
+                //console.log(i);
+                //console.log(JSON.parse(http.responseText));
                 if(i==threshold || threshold == true) {
                     console.log('DONE!');
                     console.log('Total requests sent: '+requestsSent);
