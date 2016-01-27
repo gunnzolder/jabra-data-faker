@@ -9,23 +9,83 @@
 
 <section class="event-generator container">
     <div class="row">
-        <div class="col-xs-12">
-            <h1 class="">Jabra Event Generator</h1>
-            <input type="button" class="btn btn-success" value="Start" name="start">
-            <input type="button" class="btn btn-danger" value="Stop" name="stop">
-            <hr>
+
+        <div class="col-xs-12 col-md-8 well">
+            <h1 class="">Jabra Events Plasma Blaster</h1>
         </div>
     </div>
 
     <div class="row">
+        <div class="col-xs-12 col-md-8">
+            <form  name="url-form" onsubmit="return false">
+
+                <label for="post-url">Url for queries:</label>
+                <input type="url" id="post-url" class="form-control" value="http://gnlogging.azurewebsites.net/api/logging">
+
+            </form>
+        </div>
     </div>
 
+    <div class="row">
+        <hr>
+        <div class="col-xs-12 col-md-8">
+            <h3>Interval</h3>
+            <p>Send the data using JS setInterval. To start, set the interval (ms) press Start, to stop, press Stop:</p>
+            <form class="form-inline"  name="interval-form" onsubmit="return false">
+                <input type="number" class="form-control" id="interval-ms" value="50">
+                <input type="button" class="btn btn-success" value="Start" name="start-interval">
+                <input type="button" class="btn btn-danger" value="Stop" name="stop-interval">
+            </form>
+        </div>
+        <div class="col-xs-12 col-md-4">
+            <pre class="interval-result alert"></pre>
+        </div>
+    </div>
 
+    <div class="row">
+        <hr>
+        <div class="col-xs-12 col-md-8">
+
+            <h3>Time Limit</h3>
+            <p>Send the maximum number of requests fitting given amount of time . To start, enter the time in SECONDS and press Go.</p>
+            <form class="form-inline"  name="time-limit">
+                <input type="number" class="form-control" id="time-limit-s" value="10">
+                <input type="submit" class="btn btn-success" value="Go" name="start-time-limit">
+            </form>
+        </div>
+        <div class="col-xs-12 col-md-4">
+            <pre class="time-limit-result alert"></pre>
+        </div>
+    </div>
+
+    <div class="row">
+        <hr>
+        <div class="col-xs-12 col-md-8">
+
+            <h3>Requests limit</h3>
+            <p>Send the given number of requests with no time restrictions. To start, enter the number and press Go.</p>
+            <form class="form-inline" name="requests-limit">
+                <input type="number" class="form-control" id="requests-limit-number" value="1000">
+                <input type="submit" class="btn btn-success" value="Go" name="start-requests-limit">
+            </form>
+        </div>
+        <div class="col-xs-12 col-md-4">
+            <pre class="requests-limit-result alert"></pre>
+        </div>
+    </div>
+
+    <div class="row">
+        <hr>
+        <div class="col-xs-12 ">
+            <p class="small">To see how a single request looks like, please visit the <a href="single-request.html">Jabra Single Shot</a> page</p>
+
+        </div>
+    </div>
 
 </section>
 
-<script type="application/json" id="events_json"></script>
-<script type="application/json" id="headers_json"></script>
+<script type="application/json" id="json-events"></script>
+<script type="application/json" id="json-headers"></script>
 
 <script src="libs/chance.min.js"></script>
 <script src="libs/handlebars.min.js"></script>

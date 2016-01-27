@@ -24,6 +24,33 @@ $block-name: "event-generator";
     font-size:12px;
   }
 
+  &__button {
+    &--loading {
+      position: relative;
+        -webkit-transition: all .2s ease-in-out;
+        -o-transition: all .2s ease-in-out;
+        transition: all .2s ease-in-out;
+        padding-right: 30px;
+        opacity: .7;
+
+      &:after {
+        -webkit-animation: spin 1.5s steps(12) infinite;
+        -o-animation: spin 1.5s steps(12) infinite;
+        animation: spin 1.5s steps(12) infinite;
+        content: '';
+        display: block;
+        background-image: url(data:image/svg+xml;base64,PHN2ZyB2ZXJzaW9uPScxLjEnIHhtbG5zPSdodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZycgeG1sbnM6eGxpbms9J2h0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsnIHg9JzBweCcgeT0nMHB4JyB2aWV3Qm94PScwIDAgMjYgMjYnIGVuYWJsZS1iYWNrZ3JvdW5kPSduZXcgMCAwIDI2IDI2JyB4bWw6c3BhY2U9J3ByZXNlcnZlJz4gPHJlY3QgeD0nMTIuMicgeT0nMi40JyB3aWR0aD0nMS42JyBoZWlnaHQ9JzUuNycvPiA8cG9seWdvbiBvcGFjaXR5PScwLjYnIHBvaW50cz0nMTYuMSwxNi44IDE4LjksMjEuOCAxNy41LDIyLjYgMTQuNywxNy42ICcvPiA8cG9seWdvbiBvcGFjaXR5PScwLjkyJyBwb2ludHM9JzE0LjcsOC40IDE3LjYsMy40IDE4LjksNC4yIDE2LjEsOS4yICcvPiA8cG9seWdvbiBvcGFjaXR5PScwLjY4JyBwb2ludHM9JzIxLjgsMTguOSAxNi44LDE2LjEgMTcuNiwxNC43IDIyLjYsMTcuNSAnLz4gPHBvbHlnb24gb3BhY2l0eT0nMC44NCcgcG9pbnRzPScxNi44LDkuOSAyMS44LDcuMSAyMi42LDguNCAxNy42LDExLjMgJy8+IDxwb2x5Z29uIG9wYWNpdHk9JzAuMicgcG9pbnRzPSc5LjIsOS45IDguNCwxMS4zIDMuNCw4LjQgNC4yLDcuMSAnLz4gPHBvbHlnb24gb3BhY2l0eT0nMC4xMicgcG9pbnRzPSc3LDQuMiA4LjQsMy40IDExLjIsOC40IDkuOCw5LjIgJy8+IDxwb2x5Z29uIG9wYWNpdHk9JzAuMzYnIHBvaW50cz0nOS4yLDE2LjEgNC4yLDE4LjkgMy40LDE3LjUgOC40LDE0LjcgJy8+IDxwb2x5Z29uIG9wYWNpdHk9JzAuNDQnIHBvaW50cz0nOC40LDIyLjYgNy4xLDIxLjggOS45LDE2LjggMTEuMywxNy42ICcvPiA8cmVjdCB4PScyLjQnIHk9JzEyLjInIG9wYWNpdHk9JzAuMjgnIHdpZHRoPSc1LjcnIGhlaWdodD0nMS42Jy8+IDxyZWN0IHg9JzEyLjInIHk9JzE3LjknIG9wYWNpdHk9JzAuNTInIHdpZHRoPScxLjYnIGhlaWdodD0nNS43Jy8+IDxyZWN0IHg9JzE3LjknIHk9JzEyLjInIG9wYWNpdHk9JzAuNzYnIHdpZHRoPSc1LjcnIGhlaWdodD0nMS42Jy8+IDwvc3ZnPg==);
+        width: 20px;
+        height: 20px;
+        background-size: cover;
+        position: absolute;
+        top: 50%;
+        margin: -10px 0;
+        right: 5px;
+      }
+    }
+  }
+
 }
 
 @media (min-width: breakpoint-min(sm)) {}
@@ -40,3 +67,27 @@ $block-name: "event-generator";
   }
 }
 
+
+@-webkit-keyframes spin {
+  to {
+    -webkit-transform: rotate(360deg)
+  }
+}
+
+@-moz-keyframes spin {
+  to {
+    -moz-transform: rotate(360deg)
+  }
+}
+
+@-o-keyframes spin {
+  to {
+    -o-transform: rotate(360deg)
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg)
+  }
+}

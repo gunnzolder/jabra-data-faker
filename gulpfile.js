@@ -50,8 +50,8 @@ gulp.task('html', function () {
             'src/**/index.html'
         ], {base:'./src'})
         //.pipe(inject(headers, { transform: fileContents }))
-        .pipe(inject(events,injectOptions('events_json')))
-        .pipe(inject(headers,injectOptions('headers_json')))
+        .pipe(inject(events,injectOptions('json-events')))
+        .pipe(inject(headers,injectOptions('json-headers')))
         .pipe(gulp.dest('./app'));
 
     gulp.src([

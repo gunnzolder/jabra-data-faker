@@ -1,26 +1,109 @@
 (function(){
     'use strict';
 
-    var availableHeaders = JSON.parse(document.querySelector('#headers_json').innerHTML),
-        availableEvents = JSON.parse(document.querySelector('#events_json').innerHTML),
-        start = document.querySelector('input[name=start]'),
-        stop = document.querySelector('input[name=stop]'),
-        interval;
+    var availableHeaders = JSON.parse(document.querySelector('#json-headers').innerHTML),
+        availableEvents = JSON.parse(document.querySelector('#json-events').innerHTML),
+        startInterval = document.querySelector('input[name=start-interval]'),
+        stopInterval = document.querySelector('input[name=stop-interval]'),
+        timeLimitForm = document.querySelector('form[name="time-limit"]'),
+        requestsLimitForm = document.querySelector('form[name="requests-limit"]'),
+        //url = 'http://gnlogging.azurewebsites.net/api/logging';
+        //url = "http://jabra-place.dev/jabra-faker-test.php";
+        url = document.querySelector('#post-url').value;
 
-    start.onclick = function(){
-        var i = 0;
-        var url = "http://jabra-place.dev/jabra-faker-test.php";
+
+    var interval, requestsSent, threshold;
+
+    requestsLimitForm.onsubmit = function(){
+        var requests = threshold = this.querySelector('input[type=number]').value;
+        var messageBox = document.querySelector('.requests-limit-result');
+        messageBox.innerHTML = 'Sending requests...';
+        messageBox.classList.add('alert-warning');
+
+        requestsSent = 0;
+
+        for (;requests>=1;requests--) {
+            (function(i){
+                requestsSent++;
+                sendPieceData(url, chance.DataPiece(availableEvents), chance.Header(availableHeaders), requestsSent);
+            })(requests);
+        }
+
+        return false
+    };
+
+    timeLimitForm.onsubmit = function(){
+        var timeout = this.querySelector('input[type=number]').value*1000;
+        var messageBox = document.querySelector('.time-limit-result');
+        messageBox.innerHTML = 'Sending requests...';
+        messageBox.classList.add('alert-warning');
+
+
+        requestsSent = 0;
+        threshold = false;
+        console.log(threshold);
+
+
+
+        var loop = setInterval(function(){
+            requestsSent++;
+            sendPieceData(url, chance.DataPiece(availableEvents), chance.Header(availableHeaders), requestsSent);
+        }, 0);
+
+        setTimeout(function(){
+
+
+            clearInterval(loop);
+            var message = 'Success. Requests sent: '+requestsSent,
+                messageBox = document.querySelector('.alert-warning');
+            messageBox.classList.remove('alert-warning');
+            messageBox.classList.add('alert-success');
+            messageBox.innerHTML = message;
+        }, timeout);
+
+        return false
+    };
+
+
+
+
+    startInterval.onclick = function(){
+
+        var intervalValue = document.querySelector('#interval-ms').value;
+
+        requestsSent = 0;
+
+        var messageBox = document.querySelector('.interval-result');
+
+        messageBox.innerHTML = 'Sending requests...';
+        messageBox.classList.add('alert-warning');
+
 
         interval = setInterval(function(){
-            sendPieceData(url, chance.DataPiece(availableEvents), chance.Header(availableHeaders), i);
-            i++;
-        }, 5);
-
+            sendPieceData(url, chance.DataPiece(availableEvents), chance.Header(availableHeaders), requestsSent);
+            requestsSent++;
+        }, intervalValue);
     }
 
-    stop.onclick = function(){
+
+    stopInterval.onclick = function(){
         clearInterval(interval);
+
+        var message = 'Success. Requests sent: '+requestsSent,
+            messageBox = document.querySelector('.interval-result');
+        messageBox.classList.remove('alert-warning');
+        messageBox.classList.add('alert-success');
+        messageBox.innerHTML = message;
     }
+
+
+    function makeEvent(availableHeaders,availableEvents){
+        return {
+            headers : chance.Header(availableHeaders),
+            requestData : chance.DataPiece(availableEvents)
+        }
+    }
+
 
     function sendPieceData(url, data, headers, i){
 
@@ -36,8 +119,19 @@
         http.onload = function() {
             if(http.readyState == 4 && http.status == 200) {
                 console.log(i);
+                if(i==threshold || threshold == true) {
+                    console.log('DONE!');
+                    console.log('Total requests sent: '+requestsSent);
+
+                    var message = 'Success. Requests sent: '+requestsSent,
+                        messageBox = document.querySelector('.alert-warning');
+                    messageBox.classList.remove('alert-warning');
+                    messageBox.classList.add('alert-success');
+                    messageBox.innerHTML = message;
+                }
             }
         }
     }
+
 
 })();
