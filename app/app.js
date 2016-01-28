@@ -11,7 +11,7 @@
         //url = "http://jabra-place.dev/jabra-faker-test.php";
         //url = document.querySelector('#post-url').value;
 
-    var interval, requestsSent, threshold;
+    var interval, requestsSent, failedRequests, threshold;
 
     requestsLimitForm.onsubmit = function(){
         var url = document.querySelector('#post-url').value;
@@ -20,12 +20,13 @@
         messageBox.innerHTML = 'Sending requests...';
         messageBox.classList.add('alert-warning');
 
-        requestsSent = 0;
+        requestsSent = failedRequests = 0;
 
         for (;requests>=1;requests--) {
             (function(i){
                 requestsSent++;
                 sendPieceData(url, chance.DataPiece(availableEvents), chance.Header(availableHeaders), requestsSent);
+                console.log(failedRequests);
             })(requests);
         }
 
@@ -40,7 +41,8 @@
         messageBox.innerHTML = 'Sending requests...';
         messageBox.classList.add('alert-warning');
 
-        requestsSent = 0;
+        requestsSent = failedRequests = 0;
+
         threshold = false;
 
         var loop = setInterval(function(){
@@ -71,7 +73,7 @@
 
         var intervalValue = document.querySelector('#interval-ms').value;
 
-        requestsSent = 0;
+        requestsSent = failedRequests = 0;
 
         var messageBox = document.querySelector('.interval-result');
 
@@ -85,7 +87,6 @@
         }, intervalValue);
     }
 
-
     stopInterval.onclick = function(){
         clearInterval(interval);
 
@@ -96,27 +97,23 @@
         messageBox.innerHTML = message;
     }
 
-
-    function makeEvent(availableHeaders,availableEvents){
-        return {
-            headers : chance.Header(availableHeaders),
-            requestData : chance.DataPiece(availableEvents)
-        }
-    }
-
-
     function sendPieceData(url, data, headers, i){
 
         var http = new XMLHttpRequest();
         http.open("POST", url, true);
-        http.setRequestHeader("Content-Type", "application/json");
 
         for (var header in headers) {
             http.setRequestHeader(header, headers[header])
         }
-        //console.log(data);
 
-        http.send(JSON.stringify({"Events":data}));
+        if(url == 'http://gnlogging.azurewebsites.net/api/logging')  {
+            http.setRequestHeader("Content-Type", "application/json");
+            http.send(JSON.stringify({"Events":data}));
+        } else {
+            http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            http.send("data="+JSON.stringify({"Events":data}));
+        }
+
 
         http.onload = function() {
             if(http.readyState == 4 && http.status == 201) {
@@ -132,6 +129,8 @@
                     messageBox.classList.add('alert-success');
                     messageBox.innerHTML = message;
                 }
+            } else {
+                failedRequests++;
             }
         }
     }

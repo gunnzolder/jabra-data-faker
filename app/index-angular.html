@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" ng-app="blaster">
 <head>
     <meta charset="UTF-8">
     <title>Jabra Event Generator</title>
@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<section class="event-generator container">
+<section class="event-generator container" ng-controller="BlasterCtrl as blaster">
     <div class="row">
 
         <div class="col-xs-12 col-md-8 well">
@@ -16,9 +16,9 @@
     </div>
     <div class="row">
         <div class="col-xs-12 col-md-8">
-            <form  name="url-form" onsubmit="return false">
+            <form  name="url-form" ng-submit="blaster.test()" >
                 <label for="post-url">Url for queries:</label>
-                <input type="url" id="post-url" class="form-control" value="http://gnlogging.azurewebsites.net/api/logging">
+                <input type="url" id="post-url" class="form-control" ng-model="url" value="http://gnlogging.azurewebsites.net/api/logging">
             </form>
         </div>
     </div>
@@ -45,8 +45,8 @@
 
             <h3>Time Limit</h3>
             <p>Send the maximum number of requests fitting given amount of time . To start, enter the time in SECONDS and press Go.</p>
-            <form class="form-inline"  name="time-limit">
-                <input type="number" class="form-control" id="time-limit-s" value="10">
+            <form class="form-inline"  name="time-limit" ng-controller="TimeLimitCtrl as time" ng-submit="time.run()">
+                <input type="number" class="form-control" id="time-limit-s" ng-model="time.seconds">
                 <input type="submit" class="btn btn-success" value="Go" name="start-time-limit">
             </form>
         </div>
@@ -86,6 +86,7 @@
 
 <script src="libs/chance.min.js"></script>
 <script src="chance.mixins.js"></script>
-<script src="app.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.9/angular.min.js"></script>
+<script src="app.module.js"></script>
 </body>
 </html>

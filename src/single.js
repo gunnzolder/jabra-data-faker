@@ -39,23 +39,27 @@
 
         var http = new XMLHttpRequest();
         http.open("POST", url, true);
-        http.setRequestHeader("Content-Type", "application/json");
 
         for (var header in headers) {
             http.setRequestHeader(header, headers[header])
         }
 
-        http.send(JSON.stringify({"Events":data}));
+        if(url == 'http://gnlogging.azurewebsites.net/api/logging') {
+            http.setRequestHeader("Content-Type", "application/json");
+            http.send(JSON.stringify({"Events":data}));
+        } else {
+            http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            http.send("data="+JSON.stringify({"Events":data}));
+        }
 
         var postResult = document.querySelector('.post_result');
 
         http.onload = function() {
             if(http.readyState == 4 && http.status == 201 || http.status == 200) {
-                var response = JSON.parse(http.responseText);
-                //console.log(JSON.parse(response));
-                console.log(response);
-                postResult.innerHTML = JSON.stringify(response, null, 4);
-                //postResult.innerHTML = http.responseText;
+
+
+                var response = (http.responseText)? JSON.stringify(JSON.parse(http.responseText), null, 4) : http.status+':'+http.statusText ;
+                postResult.innerHTML = response;
                 postResult.classList.add('alert-success');
 
             }

@@ -22,6 +22,7 @@ gulp.task('scripts', function () {
     gulp.src([
             'src/chance.mixins.js',
             'src/app.js',
+            'src/app.module.js',
             'src/single.js'
         ], {base:'./app'})
         .pipe(map(stripPaths))
@@ -47,7 +48,8 @@ gulp.task('html', function () {
     }
 
     gulp.src([
-            'src/**/index.html'
+            'src/**/index.html',
+            'src/**/index-angular.html'
         ], {base:'./src'})
         //.pipe(inject(headers, { transform: fileContents }))
         .pipe(inject(events,injectOptions('json-events')))
