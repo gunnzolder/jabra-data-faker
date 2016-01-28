@@ -109,16 +109,17 @@
 
         var http = new XMLHttpRequest();
         http.open("POST", url, true);
-        http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        http.setRequestHeader("Content-Type", "application/json");
 
         for (var header in headers) {
             http.setRequestHeader(header, headers[header])
         }
         //console.log(data);
 
-        http.send("data="+JSON.stringify(data));
+        http.send(JSON.stringify({"Events":data}));
+
         http.onload = function() {
-            if(http.readyState == 4 && http.status == 200) {
+            if(http.readyState == 4 && http.status == 201) {
                 //console.log(i);
                 //console.log(JSON.parse(http.responseText));
                 if(i==threshold || threshold == true) {

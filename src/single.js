@@ -39,18 +39,18 @@
 
         var http = new XMLHttpRequest();
         http.open("POST", url, true);
-        http.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        http.setRequestHeader("Content-Type", "application/json");
 
         for (var header in headers) {
             http.setRequestHeader(header, headers[header])
         }
 
-        http.send("data="+JSON.stringify(data));
+        http.send(JSON.stringify({"Events":data}));
 
         var postResult = document.querySelector('.post_result');
 
         http.onload = function() {
-            if(http.readyState == 4 && http.status == 200) {
+            if(http.readyState == 4 && http.status == 201 || http.status == 200) {
                 var response = JSON.parse(http.responseText);
                 //console.log(JSON.parse(response));
                 console.log(response);
